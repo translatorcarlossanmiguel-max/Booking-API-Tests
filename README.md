@@ -10,3 +10,8 @@ If you don’t have Newman installed globally:
 npm install -g newman
 
 npx newman run BookingAPI.postman_collection.json -e BookingAPI.postman_environment.json
+
+npx newman run BookingAPI.postman_collection.json \
+  -e BookingAPI.postman_environment.json \
+  -r cli,html \
+  --reporter-html-export ./newman-report.html
