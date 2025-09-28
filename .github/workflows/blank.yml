@@ -28,3 +28,10 @@ jobs:
             -e BookingAPI.postman_environment.json \
             -r cli,junit \
             --reporter-junit-export newman-results.xml
+
+      - name: Upload Newman Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: newman-report
+          path: newman-results.xml
+
