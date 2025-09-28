@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -30,8 +30,8 @@ jobs:
             --reporter-junit-export newman-results.xml
 
       - name: Upload Newman Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: newman-report
           path: newman-results.xml
-
+          retention-days: 5
