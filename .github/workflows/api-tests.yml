@@ -1,37 +1,17 @@
-name: API Tests
+name: Automated API tests using Postman CLI
 
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+on: push
 
 jobs:
-  run-postman-tests:
-    runs-on: ubuntu-latest
-
+  automated-api-tests:
+    runs-on: windows-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '22'
-
-      - name: Install Newman
-        run: npm install -g newman
-
-      - name: Run Booking API Collection
+      - uses: actions/checkout@v4
+      - name: Install Postman CLI
         run: |
-          newman run BookingAPI.postman_collection.json \
-            -e BookingAPI.postman_environment.json \
-            -r cli,junit \
-            --reporter-junit-export newman-results.xml
-
-      - name: Upload Newman Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: newman-report
-          path: newman-results.xml
-          retention-days: 5
+          powershell.exe -NoProfile -InputFormat None -ExecutionPolicy AllSigned -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://dl-cli.pstmn.io/install/win64.ps1'))"
+      - name: Login to Postman CLI
+        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
+      - name: Run API tests
+        run: |
+          postman collection run "40397174-feeaf7cd-c293-4e26-bae5-0371e96f112c" -e "40397174-5cff5de0-10de-41c8-8929-a9dfe7d8d287"
