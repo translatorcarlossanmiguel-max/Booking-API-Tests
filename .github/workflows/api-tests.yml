@@ -23,12 +23,13 @@ jobs:
             --reporter-html-export "postman-report.html"
       - name: Install Newman
         run: npm install -g newman
-      - name: Run API tests with Newman
-        # Assumes you have exported the Postman collection/environment to the repo or know their URLs
+      - name: Run Newman API tests
+        shell: pwsh
         run: |
-          newman run ./path/to/collection.json -e ./path/to/environment.json \
-            --reporters cli,json,html \
-            --reporter-json-export newman-report.json \
+          newman run ./path/to/collection.json `
+            -e ./path/to/environment.json `
+            --reporters cli,json,html `
+            --reporter-json-export newman-report.json `
             --reporter-html-export newman-report.html
       - name: Upload Postman Reports
         if: always()
