@@ -12,7 +12,7 @@ jobs:
           powershell.exe -NoProfile -InputFormat None -ExecutionPolicy AllSigned -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://dl-cli.pstmn.io/install/win64.ps1'))"
       - name: Login to Postman CLI
         run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
-      - name: Run API tests
+      - name: Run API tests with Postman CLI
         continue-on-error: true
         shell: pwsh
         run: |
@@ -21,6 +21,15 @@ jobs:
             --reporters cli,json,html `
             --reporter-json-export "postman-report.json" `
             --reporter-html-export "postman-report.html"
+      - name: Install Newman
+        run: npm install -g newman
+      - name: Run API tests with Newman
+        # Assumes you have exported the Postman collection/environment to the repo or know their URLs
+        run: |
+          newman run ./path/to/collection.json -e ./path/to/environment.json \
+            --reporters cli,json,html \
+            --reporter-json-export newman-report.json \
+            --reporter-html-export newman-report.html
       - name: Upload Postman Reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -29,3 +38,5 @@ jobs:
           path: |
             postman-report.json
             postman-report.html
+            newman-report.json
+            newman-report.html
