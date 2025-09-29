@@ -20,3 +20,10 @@ jobs:
             --reporters cli,json,html `
             --reporter-json-export "postman-report.json" `
             --reporter-html-export "postman-report.html"
+      - name: Upload Postman Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: postman-reports
+          path: |
+            postman-report.json
+            postman-report.html
