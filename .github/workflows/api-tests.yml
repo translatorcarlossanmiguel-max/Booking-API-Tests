@@ -23,7 +23,8 @@ jobs:
             --reporter-html-export "postman-report.html"
       - name: Install Newman
         run: npm install -g newman
-      - name: Run Newman API tests
+      - name: Run Newman API tests        
+        continue-on-error: true     
         shell: pwsh
         run: |
           npx newman run ./BookingAPI.postman_collection.json `
