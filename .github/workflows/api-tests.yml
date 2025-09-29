@@ -26,8 +26,8 @@ jobs:
       - name: Run Newman API tests
         shell: pwsh
         run: |
-          newman run ./path/to/collection.json `
-            -e ./path/to/environment.json `
+          newman run ./collections/booking-collection.json `
+            -e ./environments/booking-environment.json `
             --reporters cli,json,html `
             --reporter-json-export newman-report.json `
             --reporter-html-export newman-report.html
