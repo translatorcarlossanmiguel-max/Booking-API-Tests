@@ -82,5 +82,4 @@ After running the tests with the HTML reporter, a file named `newman-report.html
   - Detailed logs for any failures
 
 ---
-
 Happy Testing! 🚦
