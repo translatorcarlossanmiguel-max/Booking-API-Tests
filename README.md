@@ -3,6 +3,9 @@
 Welcome to the **Booking API Tests** repository!  
 This project contains a collection of automated API tests for the [Restful Booker API](https://restful-booker.herokuapp.com/), written in Postman and designed to cover both positive and negative scenarios.
 
+> **Note:**  
+> As requested, these tests are being executed using both the Postman CLI and Newman. In the future, we will need to decide which tool is best suited for this project and standardize on either Postman CLI or Newman for running our API tests.
+
 These tests help ensure that the API functions as expected and catches regressions early in development.
 
 ---
@@ -20,6 +23,7 @@ These tests help ensure that the API functions as expected and catches regressio
 
 - [Node.js](https://nodejs.org/) installed on your machine
 - [Newman](https://github.com/postmanlabs/newman) (the command-line runner for Postman collections)
+- (Optional) [Postman CLI](https://learning.postman.com/docs/postman-cli/postman-cli-overview/) for running collections
 
 ---
 
@@ -31,24 +35,32 @@ Install Newman globally (if you haven’t already):
 npm install -g newman
 ```
 
+If you want to use the Postman CLI, refer to the [official documentation](https://learning.postman.com/docs/postman-cli/postman-cli-overview/) for installation steps.
+
 ---
 
 ## ▶️ Running the Tests
 
-1. **Run with default CLI reporter:**
+### 1. Run with Newman (default CLI reporter):
 
-   ```bash
-   newman run BookingAPI.postman_collection.json -e BookingAPI.postman_environment.json
-   ```
+```bash
+newman run BookingAPI.postman_collection.json -e BookingAPI.postman_environment.json
+```
 
-2. **Run and generate an HTML report:**
+### 2. Run and generate an HTML report with Newman:
 
-   ```bash
-   newman run BookingAPI.postman_collection.json \
-     -e BookingAPI.postman_environment.json \
-     -r cli,html \
-     --reporter-html-export ./newman-report.html
-   ```
+```bash
+newman run BookingAPI.postman_collection.json \
+  -e BookingAPI.postman_environment.json \
+  -r cli,html \
+  --reporter-html-export ./newman-report.html
+```
+
+### 3. Run with Postman CLI (alternative):
+
+```bash
+postman collection run BookingAPI.postman_collection.json -e BookingAPI.postman_environment.json
+```
 
 - The `-e BookingAPI.postman_environment.json` flag loads the environment variables required for the tests.
 - The `-r cli,html` flag tells Newman to output results to both the terminal and an HTML file.
@@ -68,14 +80,6 @@ After running the tests with the HTML reporter, a file named `newman-report.html
   - Passed/failed test cases
   - Response times and status codes
   - Detailed logs for any failures
-
----
-
-## 📚 Useful Links
-
-- [Newman Documentation](https://www.npmjs.com/package/newman)
-- [Postman Learning Center](https://learning.postman.com/)
-- [Restful Booker API Docs](https://restful-booker.herokuapp.com/apidoc/index.html)
 
 ---
 
