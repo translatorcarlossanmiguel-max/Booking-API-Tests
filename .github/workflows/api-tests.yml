@@ -16,8 +16,8 @@ jobs:
         continue-on-error: true
         shell: pwsh
         run: |
-          postman collection run "40397174-feeaf7cd-c293-4e26-bae5-0371e96f112c" `
-            -e "40397174-5cff5de0-10de-41c8-8929-a9dfe7d8d287" `
+          postman collection run ./BookingAPI.postman_collection.json `
+            -e ./BookingAPI.postman_environment.json `
             --reporters cli,json,html `
             --reporter-json-export "postman-report.json" `
             --reporter-html-export "postman-report.html"
@@ -26,8 +26,8 @@ jobs:
       - name: Run Newman API tests
         shell: pwsh
         run: |
-          newman run ./collections/booking-collection.json `
-            -e ./environments/booking-environment.json `
+          newman run ./BookingAPI.postman_collection.json `
+            -e ./BookingAPI.postman_environment.json `
             --reporters cli,json,html `
             --reporter-json-export newman-report.json `
             --reporter-html-export newman-report.html
